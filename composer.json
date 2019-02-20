@@ -1,0 +1,9 @@
+{
+    "description": "Test My Code",
+    "name": "fishingboy/test",
+    "type": "project",
+    "require": {
+        "php": ">=5.2.4",
+        "phpunit/phpunit": "7.5.2"
+    }
+}
