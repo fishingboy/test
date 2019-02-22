@@ -5,5 +5,10 @@
     "require": {
         "php": ">=5.2.4",
         "phpunit/phpunit": "7.5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Libraries\\": "libraries/"
+        }
     }
 }
