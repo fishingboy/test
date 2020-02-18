@@ -13,7 +13,7 @@ class OutputFormatTest extends TestCase
 
     public function test_case1()
     {
-        $this->formatOutput = new FormatOutput('{
+        $this->formatOutput = new TypeConverter('{
             "a" : "boolean",        
             "b" : "integer",        
             "c" : "string",
@@ -25,7 +25,7 @@ class OutputFormatTest extends TestCase
 
     public function test_case2()
     {
-        $this->formatOutput = new FormatOutput('{
+        $this->formatOutput = new TypeConverter('{
             "a" : "boolean",        
             "b" : "integer",        
             "c" : "string",
@@ -42,70 +42,70 @@ class OutputFormatTest extends TestCase
             ],
         ];
 
-        $response = $this->formatOutput->format($data);
+        $response = $this->formatOutput->convert($data);
         $this->assertIsObject($response);
     }
 
     public function test_轉換成整數()
     {
-        $this->formatOutput = new FormatOutput('{"a" : "integer"}');
-        $response = $this->formatOutput->format(["a" => "123"]);
+        $this->formatOutput = new TypeConverter('{"a" : "integer"}');
+        $response = $this->formatOutput->convert(["a" => "123"]);
         $this->assertEquals(123, $response->a);
         $this->assertIsInt($response->a);
 
-        $response = $this->formatOutput->format(["a" => "123.456"]);
+        $response = $this->formatOutput->convert(["a" => "123.456"]);
         $this->assertEquals(123, $response->a);
         $this->assertIsInt($response->a);
 
-        $response = $this->formatOutput->format(["a" => "abc"]);
+        $response = $this->formatOutput->convert(["a" => "abc"]);
         $this->assertEquals(0, $response->a);
         $this->assertIsInt($response->a);
     }
 
     public function test_轉換成float()
     {
-        $this->formatOutput = new FormatOutput('{"a" : "float"}');
-        $response = $this->formatOutput->format(["a" => "123"]);
+        $this->formatOutput = new TypeConverter('{"a" : "float"}');
+        $response = $this->formatOutput->convert(["a" => "123"]);
         $this->assertEquals(123, $response->a);
         $this->assertIsFloat($response->a);
 
-        $response = $this->formatOutput->format(["a" => "123.456"]);
+        $response = $this->formatOutput->convert(["a" => "123.456"]);
         $this->assertEquals(123.456, $response->a);
         $this->assertIsFloat($response->a);
     }
 
     public function test_轉換成布林()
     {
-        $this->formatOutput = new FormatOutput('{"a" : "boolean"}');
-        $response = $this->formatOutput->format(["a" => "123"]);
+        $this->formatOutput = new TypeConverter('{"a" : "boolean"}');
+        $response = $this->formatOutput->convert(["a" => "123"]);
         $this->assertTrue($response->a);
         $this->assertIsBool($response->a);
 
-        $response = $this->formatOutput->format(["a" => "abc"]);
+        $response = $this->formatOutput->convert(["a" => "abc"]);
         $this->assertTrue($response->a);
         $this->assertIsBool($response->a);
 
-        $response = $this->formatOutput->format(["a" => "0"]);
+        $response = $this->formatOutput->convert(["a" => "0"]);
         $this->assertFalse($response->a);
         $this->assertIsBool($response->a);
     }
 
     public function test_轉換成字串()
     {
-        $this->formatOutput = new FormatOutput('{"a" : "string"}');
-        $response = $this->formatOutput->format(["a" => 123]);
+        $this->formatOutput = new TypeConverter('{"a" : "string"}');
+        $response = $this->formatOutput->convert(["a" => 123]);
         $this->assertEquals("123", $response->a);
         $this->assertIsString($response->a);
 
-        $response = $this->formatOutput->format(["a" => true]);
+        $response = $this->formatOutput->convert(["a" => true]);
         $this->assertEquals("1", $response->a);
         $this->assertIsString($response->a);
     }
 
     public function test_轉換物件陣列()
     {
-        $this->formatOutput = new FormatOutput('{"users":[{"name":"string","age":"integer"}]}');
-        $response = $this->formatOutput->format([
+        $this->formatOutput = new TypeConverter('{"users":[{"name":"string","age":"integer"}]}');
+        $response = $this->formatOutput->convert([
             "users" => [
                 ["name" => "leo", "age" => "123"],
                 ["name" => true, "age" => 123.456],
@@ -123,18 +123,18 @@ class OutputFormatTest extends TestCase
 
     public function test_null轉換物件陣列()
     {
-        $this->formatOutput = new FormatOutput('{"users":[{"name":"string","age":"integer"}]}');
-        $response = $this->formatOutput->format(null);
+        $this->formatOutput = new TypeConverter('{"users":[{"name":"string","age":"integer"}]}');
+        $response = $this->formatOutput->convert(null);
         $this->assertNull($response);
     }
 
     public function test_轉換物件Fail()
     {
-        $this->formatOutput = new FormatOutput('{"users":[{"name":"string","age":"integer"}]}');
+        $this->formatOutput = new TypeConverter('{"users":[{"name":"string","age":"integer"}]}');
 
         $fail = false;
         try {
-            $response = $this->formatOutput->format([
+            $response = $this->formatOutput->convert([
                 "users" => ["name" => "leo", "age" => "123"],
             ]);
         } catch (Exception $e) {
@@ -149,9 +149,9 @@ class OutputFormatTest extends TestCase
  * API Output 正規化
  * @author Leo.Kuo <fishingboy@gmail.com>
  */
-class FormatOutput
+class TypeConverter
 {
-    private $format = "";
+    private $format = null;
 
     public function __construct($format)
     {
@@ -159,22 +159,13 @@ class FormatOutput
     }
 
     /**
-     * 取得目前的格式
-     * @return mixed|string
-     */
-    public function get_format()
-    {
-        return $this->format;
-    }
-
-    /**
-     * 轉換格式
+     * 轉換型別
      * @param $value
      * @param mixed $format
      * @return mixed
      * @throws Exception
      */
-    public function format($value, $format = null)
+    public function convert($value, $format = null)
     {
         $format = isset($format) ? $format : $this->format;
 
@@ -193,7 +184,7 @@ class FormatOutput
 
             foreach ($format as $key => $sub_format) {
                 if (property_exists($value, $key)) {
-                    $value->$key = $this->format($value->$key, $sub_format);
+                    $value->$key = $this->convert($value->$key, $sub_format);
                 } else {
                     $value->$key = null;
                 }
@@ -207,7 +198,7 @@ class FormatOutput
 
             $sub_format = $format[0];
             foreach ($value as $i => $val) {
-                $value[$i] = $this->format($value[$i], $sub_format);
+                $value[$i] = $this->convert($value[$i], $sub_format);
             }
             return $value;
         } else {
