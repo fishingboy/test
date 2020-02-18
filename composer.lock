@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8baf6b03309c10264b1df5759477200",
+    "content-hash": "9fcb3d748b84a7f07852c62b37cc7902",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -59,6 +59,46 @@
                 "instantiate"
             ],
             "time": "2017-07-22T11:58:36+00:00"
+        },
+        {
+            "name": "fishingboy/type-converter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fishingboy/Type-Converter.git",
+                "reference": "6803fc8aa31cb9daf7d59664141a8b0f64b61bf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fishingboy/Type-Converter/zipball/6803fc8aa31cb9daf7d59664141a8b0f64b61bf0",
+                "reference": "6803fc8aa31cb9daf7d59664141a8b0f64b61bf0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "fishingboy\\type_converter\\": "/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fishingboy",
+                    "email": "et282523@hotmail.com"
+                }
+            ],
+            "description": "convert php value type for api output",
+            "keywords": [
+                "api output",
+                "type convert"
+            ],
+            "time": "2020-02-18T11:19:28+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1480,7 +1520,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "fishingboy/type-converter": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
