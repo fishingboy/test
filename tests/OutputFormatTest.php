@@ -127,6 +127,22 @@ class OutputFormatTest extends TestCase
         $response = $this->formatOutput->format(null);
         $this->assertNull($response);
     }
+
+    public function test_轉換物件Fail()
+    {
+        $this->formatOutput = new FormatOutput('{"users":[{"name":"string","age":"integer"}]}');
+
+        $fail = false;
+        try {
+            $response = $this->formatOutput->format([
+                "users" => ["name" => "leo", "age" => "123"],
+            ]);
+        } catch (Exception $e) {
+            $fail = true;
+            $this->assertEquals("Can't convert string to object !!", $e->getMessage());
+        }
+        $this->assertTrue($fail);
+    }
 }
 
 /**
@@ -156,6 +172,7 @@ class FormatOutput
      * @param $value
      * @param mixed $format
      * @return mixed
+     * @throws Exception
      */
     public function format($value, $format = null)
     {
@@ -170,7 +187,8 @@ class FormatOutput
             if (is_array($value)) {
                 $value = (object) $value;
             } else {
-                return null;
+                $type = gettype($value);
+                throw new Exception("Can't convert {$type} to object !!");
             }
 
             foreach ($format as $key => $sub_format) {
