@@ -5,7 +5,7 @@
     "require": {
         "php": ">=5.2.4",
         "phpunit/phpunit": "7.5.2",
-        "fishingboy/type-converter": "dev-master"
+        "fishingboy/type-converter": "1.*"
     },
     "autoload": {
         "psr-4": {

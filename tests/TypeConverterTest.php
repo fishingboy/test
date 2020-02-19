@@ -97,17 +97,17 @@ class TypeConverterTest extends TestCase
         $response = $this->formatOutput->convert([
             "users" => [
                 ["name" => "leo", "age" => "123"],
-                ["name" => true, "age" => 123.456],
-                ["name" => true, "age" => 123.456],
+                ["name" => "evonne", "age" => 123.456],
             ]
         ]);
+
+        var_dump($response, true);
+
         $this->assertIsObject($response);
         $this->assertIsString($response->users[0]->name);
         $this->assertIsInt($response->users[0]->age);
         $this->assertIsString($response->users[1]->name);
         $this->assertIsInt($response->users[1]->age);
-        $this->assertIsString($response->users[2]->name);
-        $this->assertIsInt($response->users[2]->age);
     }
 
     public function test_null轉換物件陣列()
