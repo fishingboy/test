@@ -15,10 +15,10 @@ class TypeConverterTest extends TestCase
     public function test_case2()
     {
         $this->formatOutput = new Type_Converter('{
-            "a" : "boolean",        
-            "b" : "integer",        
-            "c" : "string",
-            "d" : ["integer"]    
+            "a" : "bool",        
+            "b" : "int",        
+            "c" : "str",
+            "d" : ["int"]    
         }');
         $data = [
             "a" => 1,
@@ -37,7 +37,7 @@ class TypeConverterTest extends TestCase
 
     public function test_轉換成整數()
     {
-        $this->formatOutput = new Type_Converter('{"a" : "integer"}');
+        $this->formatOutput = new Type_Converter('{"a" : "int"}');
         $response = $this->formatOutput->convert(["a" => "123"]);
         $this->assertEquals(123, $response->a);
         $this->assertIsInt($response->a);
@@ -65,7 +65,7 @@ class TypeConverterTest extends TestCase
 
     public function test_轉換成布林()
     {
-        $this->formatOutput = new Type_Converter('{"a" : "boolean"}');
+        $this->formatOutput = new Type_Converter('{"a" : "bool"}');
         $response = $this->formatOutput->convert(["a" => "123"]);
         $this->assertTrue($response->a);
         $this->assertIsBool($response->a);
@@ -81,7 +81,7 @@ class TypeConverterTest extends TestCase
 
     public function test_轉換成字串()
     {
-        $this->formatOutput = new Type_Converter('{"a" : "string"}');
+        $this->formatOutput = new Type_Converter('{"a" : "str"}');
         $response = $this->formatOutput->convert(["a" => 123]);
         $this->assertEquals("123", $response->a);
         $this->assertIsString($response->a);
@@ -93,7 +93,7 @@ class TypeConverterTest extends TestCase
 
     public function test_轉換物件陣列()
     {
-        $this->formatOutput = new Type_Converter('{"users":[{"name":"string","age":"integer"}]}');
+        $this->formatOutput = new Type_Converter('{"users":[{"name":"str","age":"int"}]}');
         $response = $this->formatOutput->convert([
             "users" => [
                 ["name" => "leo", "age" => "123"],
@@ -112,14 +112,14 @@ class TypeConverterTest extends TestCase
 
     public function test_null轉換物件陣列()
     {
-        $this->formatOutput = new Type_Converter('{"users":[{"name":"string","age":"integer"}]}');
+        $this->formatOutput = new Type_Converter('{"users":[{"name":"str","age":"int"}]}');
         $response = $this->formatOutput->convert(null);
         $this->assertNull($response);
     }
 
     public function test_轉換物件Fail()
     {
-        $this->formatOutput = new Type_Converter('{"users":[{"name":"string","age":"integer"}]}');
+        $this->formatOutput = new Type_Converter('{"users":[{"name":"str","age":"int"}]}');
 
         $fail = false;
         try {
