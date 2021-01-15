@@ -1,3 +1,5 @@
 ._.DS_Store
 .idea
 vendor
+/nginx.access.log
+/nginx.error.log
