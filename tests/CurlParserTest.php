@@ -1,10 +1,10 @@
 <?php
 
-use Libraries\CurlParser;
+use Libraries\Car;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @property Libraries\CurlParser  parser
+ * @property Libraries\Car  parser
  */
 class CurlParserTest extends TestCase
 {
@@ -13,7 +13,7 @@ class CurlParserTest extends TestCase
     protected function setUp() :void
     {
         $curl_string = "curl 'https://sample.com/api/test' -H 'origin: https://qt.zuvio.com.tw' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,ja;q=0.6,zh-CN;q=0.5' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36' -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' -H 'accept: application/json, text/javascript, */*; q=0.01' -H 'referer: https://qt.zuvio.com.tw/student5/chat/message/70' -H 'authority: sample.com' --data 'user_id=1381&channel_id=70&action=cancel' --compressed";
-        $this->parser = new CurlParser($curl_string);
+        $this->parser = new Car($curl_string);
         $this->parser->getAll();
     }
 
