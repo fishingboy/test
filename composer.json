@@ -5,7 +5,8 @@
     "require": {
         "php": ">=7.3",
         "phpunit/phpunit": "^8.5",
-        "fishingboy/type-converter": "^1.0.2"
+        "fishingboy/type-converter": "^1.0.2",
+        "mockery/mockery": "^1.4"
     },
     "autoload": {
         "psr-4": {
