@@ -3,3 +3,4 @@
 vendor
 /nginx.access.log
 /nginx.error.log
+/tmp/*
