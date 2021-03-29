@@ -3,4 +3,5 @@
 vendor
 /nginx.access.log
 /nginx.error.log
+/.phpunit.result.cache
 /tmp/*

@@ -3,13 +3,15 @@
     "name": "fishingboy/test",
     "type": "project",
     "require": {
-        "php": ">=5.2.4",
-        "phpunit/phpunit": "7.5.2",
-        "fishingboy/type-converter": "1.*"
+        "php": ">=7.3",
+        "phpunit/phpunit": "^8.5",
+        "fishingboy/type-converter": "^1.0.2",
+        "mockery/mockery": "^1.4"
     },
     "autoload": {
         "psr-4": {
-            "Libraries\\": "libraries/"
+            "Libraries\\": "libraries/",
+            "TestClasses\\": "testClasses/"
         }
     }
 }

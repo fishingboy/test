@@ -23,7 +23,7 @@ class XhguiTest extends TestCase
 
         $response = $simple_url($str);
 
-        $this->assertEquals("/api/article/{number}", $response);
+        $this->assertEquals("localhost/api/article/{number}", $response);
     }
 
     public function test_replace_url()
