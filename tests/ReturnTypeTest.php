@@ -8,6 +8,10 @@ class ReturnTypeTest extends TestCase
     {
         $obj = new AAA();
         $response = $obj->getAge();
+        if (null === $response) {
+            echo count($response);
+            exit("cc");
+        }
         echo "<pre>response = " . print_r($response, true) . "</pre>\n";
     }
 }
